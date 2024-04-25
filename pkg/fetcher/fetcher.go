@@ -13,7 +13,7 @@ import (
 //	otherUrl   = "http://95.217.108.62:5054/ohlcv/ETH.ETH?interval=day&count=10"
 //)
 
-func FetchActionsFromFile(filename string) (map[string]interface{}, error) {
+func FetchActionJSONsFromFile(filename string) (map[string]interface{}, error) {
 	file, err := os.Open("JsonsToCompare/" + filename)
 	if err != nil {
 		return nil, err
@@ -30,7 +30,7 @@ func FetchActionsFromFile(filename string) (map[string]interface{}, error) {
 	return actions, nil
 }
 
-func FetchActions(url string, params map[string]string) (map[string]interface{}, error) {
+func FetchEndPoints(url string, params map[string]string) (map[string]interface{}, error) {
 	if len(params) != 0 {
 		url += "?"
 		for key, value := range params {

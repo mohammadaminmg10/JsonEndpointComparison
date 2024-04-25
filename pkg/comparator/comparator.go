@@ -1,7 +1,9 @@
 package comparator
 
 import (
+	"JsonToStruct/pkg/fetcher"
 	"fmt"
+	"log"
 	"reflect"
 )
 
@@ -40,6 +42,44 @@ func compareAny(a, b interface{}, path string, differences *map[string][]string)
 		if !reflect.DeepEqual(a, b) {
 			(*differences)[path] = []string{fmt.Sprintf("%v", a), fmt.Sprintf("%v", b)}
 		}
+	}
+}
+
+func HandleComparison(mode, firstURL, secondURL string, params map[string]string, allDifferences *[]map[string][]string) {
+	var firstResponse, secondResponse map[string]interface{}
+	var err error
+
+	if mode == "endpoints" {
+		firstResponse, err = fetcher.FetchEndPoints(firstURL, params)
+		if err != nil {
+			log.Printf("Failed to fetch from %s: %v", firstURL, err)
+			return
+		}
+
+		secondResponse, err = fetcher.FetchEndPoints(secondURL, params)
+		if err != nil {
+			log.Printf("Failed to fetch from %s: %v", secondURL, err)
+			return
+		}
+	} else if mode == "files" {
+		firstResponse, err = fetcher.FetchActionJSONsFromFile("first.json")
+		if err != nil {
+			log.Printf("Failed to fetch actions: %v", err)
+			return
+		}
+
+		secondResponse, err = fetcher.FetchActionJSONsFromFile("second.json")
+		if err != nil {
+			log.Printf("Failed to fetch actions: %v", err)
+			return
+		}
+	} else {
+		log.Fatalf("Invalid mode: %s", mode)
+	}
+
+	differences := CompareActionsResponses(firstResponse, secondResponse)
+	if len(differences) > 0 {
+		*allDifferences = append(*allDifferences, differences)
 	}
 }
 
