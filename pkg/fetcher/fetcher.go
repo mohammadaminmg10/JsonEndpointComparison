@@ -71,12 +71,3 @@ func FetchEndPoints(url string, params map[string]string) (map[string]interface{
 
 	return actions, nil
 }
-
-//
-//func FetchFirstActions(params map[string]string) (map[string]interface{}, error) {
-//	return fetchActions(midgardUrl, params)
-//}
-//
-//func FetchSecondActions(params map[string]string) (map[string]interface{}, error) {
-//	return fetchActions(otherUrl, params)
-//}

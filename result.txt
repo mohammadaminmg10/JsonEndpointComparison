@@ -1,2 +1,0 @@
-.key2: [value2] vs [different_value]
-------
