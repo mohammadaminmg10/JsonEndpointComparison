@@ -20,8 +20,31 @@ Before running the project, make sure you have the following installed:
 
 ## Installation
 
+
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/json-endpoint-comparator.git
+git clone https://github.com/mohammadaminmg10/JsonComparison.git
 cd json-endpoint-comparator
+```
+
+## Usage
+
+To use the JSON Endpoint Comparator, you need to specify the mode (either 'endpoints' or 'files'), and the two sources you want to compare.
+- **Comparing Endpoints**:
+  If you want to compare two endpoints, use the 'endpoints' mode and provide the URLs of the two endpoints. For example:
+  ```bash
+  go run cmd/main.go -mode=endpoints -firstURL=https://api.example.com/endpoint1 -secondURL=https://api.example.com/endpoint2
+  ```
+
+- **Comparing Files**:
+- If you want to compare two local JSON files, use the 'files' mode and provide the paths to the two files. For example:
+  ```bash
+  go run cmd/main.go -mode=files -firstURL=/path/to/first.json -secondURL=/path/to/second.json
+  ```
+  
+## Output
+The differences between the two sources will be written to a file named result.txt in the project directory. Each difference is listed with the key and the differing values from the two sources.
+
+## Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
