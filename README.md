@@ -24,8 +24,8 @@ Before running the project, make sure you have the following installed:
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/mohammadaminmg10/JsonComparison.git
-cd json-endpoint-comparator
+git clone https://github.com/mohammadaminmg10/JsonEndpointComparison.git
+cd JsonEndpointComparison
 ```
 
 ## Usage
