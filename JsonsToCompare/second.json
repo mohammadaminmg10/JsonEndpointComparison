@@ -1,5 +1,5 @@
 {
   "key1": "value1",
-  "key2": "different_value",
+  "field 2": "different_value",
   "key3": "value3"
 }

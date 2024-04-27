@@ -17,16 +17,24 @@ func compareAny(a, b interface{}, path string, differences *map[string][]string)
 		}
 		for key, valA := range aValue {
 			valB, exists := bValue[key]
+			prefix := ""
+			if path != "" {
+				prefix = "."
+			}
 			if !exists {
-				(*differences)[path+"."+key] = []string{fmt.Sprintf("%v", valA), "nil"}
+				(*differences)[path+prefix+key] = []string{fmt.Sprintf("%v", valA), "nil"}
 			} else {
-				compareAny(valA, valB, path+"."+key, differences)
+				compareAny(valA, valB, path+prefix+key, differences)
 			}
 		}
 		// Check for keys in b not in a
 		for key := range bValue {
 			if _, exists := aValue[key]; !exists {
-				(*differences)[path+"."+key] = []string{"nil", fmt.Sprintf("%v", bValue[key])}
+				prefix := ""
+				if path != "" {
+					prefix = "."
+				}
+				(*differences)[path+prefix+key] = []string{"nil", fmt.Sprintf("%v", bValue[key])}
 			}
 		}
 	case []interface{}:
@@ -62,13 +70,13 @@ func HandleComparison(mode, firstURL, secondURL string, params map[string]string
 			return
 		}
 	} else if mode == "files" {
-		firstResponse, err = fetcher.FetchActionJSONsFromFile("first.json")
+		firstResponse, err = fetcher.FetchJSONsFromFile("first.json")
 		if err != nil {
 			log.Printf("Failed to fetch actions: %v", err)
 			return
 		}
 
-		secondResponse, err = fetcher.FetchActionJSONsFromFile("second.json")
+		secondResponse, err = fetcher.FetchJSONsFromFile("second.json")
 		if err != nil {
 			log.Printf("Failed to fetch actions: %v", err)
 			return
