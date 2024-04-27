@@ -40,7 +40,7 @@ To use the JSON Endpoint Comparator, you need to specify the mode (either 'endpo
 - **Comparing Files**:
 - If you want to compare two local JSON files, use the 'files' mode and provide the paths to the two files. For example:
   ```bash
-  go run cmd/main.go -mode=files -firstURL=/path/to/first.json -secondURL=/path/to/second.json
+  go run cmd/main.go -mode=files
   ```
   
 ## Output
