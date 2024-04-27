@@ -1,4 +1,4 @@
-# JSON Endpoint Comparator
+# JSON Endpoint Comparison Tool
 
 ## Overview
 
