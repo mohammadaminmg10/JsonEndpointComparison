@@ -8,7 +8,7 @@ This project provides tools to compare JSON responses from two different sources
 
 ## Features
 
-- **Flexible Input Options**: Compare JSON data from URLs or local files.
+- **Dynamic Input Options**: Compare JSON data from URLs or local files.
 - **Parameter Handling**: Supports custom parameters for API endpoints.
 - **Detailed Comparison**: Outputs differences clearly to help identify mismatches easily.
 
