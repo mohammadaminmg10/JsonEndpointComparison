@@ -4,8 +4,6 @@
 
 This project provides tools to compare JSON responses from two different sources—either from two endpoints or two local JSON files. It is designed to assist developers and testers in identifying discrepancies in APIs or data files that are supposed to deliver the same output.
 
-![gopher](https://github.com/mohammadaminmg10/JsonComparison/blob/main/gopher.png)
-
 ## Features
 
 - **Dynamic Input Options**: Compare JSON data from URLs or local files.
