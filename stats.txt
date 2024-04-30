@@ -1,0 +1,4 @@
+Total fields compared: 3
+Total differences: 1
+---------------------------- 
+Difference percentage: 33.33%

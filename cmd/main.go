@@ -4,6 +4,7 @@ import (
 	param "JsonToStruct/params"
 	"JsonToStruct/pkg/comparator"
 	_ "JsonToStruct/pkg/fetcher"
+	"JsonToStruct/pkg/stats"
 	"bufio"
 	"flag"
 	"fmt"
@@ -21,16 +22,22 @@ func main() {
 		log.Fatalf("Please specify both endpoint URLs")
 	}
 
+	////fill the mode and urls for debugging
+	//mode := "files"
+	//firstURL := ""
+	//secondURL := ""
+
 	parameters := param.LoadParams()
 
 	var allDifferences []map[string][]string
+	var totalFieldsCompared int
 
 	if len(parameters) == 0 {
-		comparator.HandleComparison(*mode, *firstURL, *secondURL, nil, &allDifferences)
+		comparator.HandleComparison(mode, firstURL, secondURL, nil, &allDifferences, &totalFieldsCompared)
 	} else {
 		for _, parms := range parameters {
 			params := param.GetParams(parms)
-			comparator.HandleComparison(*mode, *firstURL, *secondURL, params, &allDifferences)
+			comparator.HandleComparison(mode, firstURL, secondURL, params, &allDifferences, &totalFieldsCompared)
 		}
 	}
 
@@ -51,10 +58,13 @@ func main() {
 				continue
 			}
 		}
-		_, err = writer.WriteString("------\n") // Separator line
+		_, err = writer.WriteString("------------\n") // Separator line
 		if err != nil {
 			log.Printf("Failed to write separator to file: %v", err)
 		}
 	}
 	writer.Flush()
+
+	//calling the function to calculate the differences percentage for the two files
+	stats.CalculateDifferencePercentage(allDifferences, totalFieldsCompared)
 }

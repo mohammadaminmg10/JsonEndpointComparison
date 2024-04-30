@@ -7,7 +7,8 @@ import (
 	"reflect"
 )
 
-func compareAny(a, b interface{}, path string, differences *map[string][]string) {
+func compareAny(a, b interface{}, path string, differences *map[string][]string, totalFieldsCompared *int) {
+	//a variable to store the total number of fields that were compared whether they were equal
 	switch aValue := a.(type) {
 	case map[string]interface{}:
 		bValue, ok := b.(map[string]interface{})
@@ -24,10 +25,10 @@ func compareAny(a, b interface{}, path string, differences *map[string][]string)
 			if !exists {
 				(*differences)[path+prefix+key] = []string{fmt.Sprintf("%v", valA), "nil"}
 			} else {
-				compareAny(valA, valB, path+prefix+key, differences)
+				compareAny(valA, valB, path+prefix+key, differences, totalFieldsCompared)
 			}
 		}
-		// Check for keys in b not in a
+
 		for key := range bValue {
 			if _, exists := aValue[key]; !exists {
 				prefix := ""
@@ -44,16 +45,17 @@ func compareAny(a, b interface{}, path string, differences *map[string][]string)
 			return
 		}
 		for i, valA := range aValue {
-			compareAny(valA, bValue[i], fmt.Sprintf("%s[%d]", path, i), differences)
+			compareAny(valA, bValue[i], fmt.Sprintf("%s[%d]", path, i), differences, totalFieldsCompared)
 		}
 	default:
+		*totalFieldsCompared++
 		if !reflect.DeepEqual(a, b) {
 			(*differences)[path] = []string{fmt.Sprintf("%v", a), fmt.Sprintf("%v", b)}
 		}
 	}
 }
 
-func HandleComparison(mode, firstURL, secondURL string, params map[string]string, allDifferences *[]map[string][]string) {
+func HandleComparison(mode, firstURL, secondURL string, params map[string]string, allDifferences *[]map[string][]string, totalFieldsCompared *int) {
 	var firstResponse, secondResponse map[string]interface{}
 	var err error
 
@@ -85,14 +87,14 @@ func HandleComparison(mode, firstURL, secondURL string, params map[string]string
 		log.Fatalf("Invalid mode: %s", mode)
 	}
 
-	differences := CompareActionsResponses(firstResponse, secondResponse)
+	differences, totalFieldsCompared := CompareActionsResponses(firstResponse, secondResponse, totalFieldsCompared)
 	if len(differences) > 0 {
 		*allDifferences = append(*allDifferences, differences)
 	}
 }
 
-func CompareActionsResponses(response1, response2 map[string]interface{}) map[string][]string {
+func CompareActionsResponses(response1 map[string]interface{}, response2 map[string]interface{}, totalComp *int) (map[string][]string, *int) {
 	result := make(map[string][]string)
-	compareAny(response1, response2, "", &result)
-	return result
+	compareAny(response1, response2, "", &result, totalComp)
+	return result, totalComp
 }
