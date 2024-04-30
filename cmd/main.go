@@ -33,11 +33,11 @@ func main() {
 	var totalFieldsCompared int
 
 	if len(parameters) == 0 {
-		comparator.HandleComparison(mode, firstURL, secondURL, nil, &allDifferences, &totalFieldsCompared)
+		comparator.HandleComparison(*mode, *firstURL, *secondURL, nil, &allDifferences, &totalFieldsCompared)
 	} else {
 		for _, parms := range parameters {
 			params := param.GetParams(parms)
-			comparator.HandleComparison(mode, firstURL, secondURL, params, &allDifferences, &totalFieldsCompared)
+			comparator.HandleComparison(*mode, *firstURL, *secondURL, params, &allDifferences, &totalFieldsCompared)
 		}
 	}
 
