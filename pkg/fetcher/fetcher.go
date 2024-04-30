@@ -20,14 +20,14 @@ func FetchJSONsFromFile(filename string) (map[string]interface{}, error) {
 	}
 	defer file.Close()
 
-	var actions map[string]interface{}
+	var data map[string]interface{}
 	decoder := json.NewDecoder(file)
-	err = decoder.Decode(&actions)
+	err = decoder.Decode(&data)
 	if err != nil {
 		return nil, err
 	}
 
-	return actions, nil
+	return data, nil
 }
 
 func FetchEndPoints(url string, params map[string]string) (map[string]interface{}, error) {
