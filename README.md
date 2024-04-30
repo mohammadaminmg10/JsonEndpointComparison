@@ -8,7 +8,9 @@ This project provides tools to compare JSON responses from two different sources
 
 - **Dynamic Input Options**: Compare JSON data from URLs or local files.
 - **Parameter Handling**: Supports custom parameters for API endpoints.
+- - **Statistical Analysis**: Calculates and reports the percentage of differences, helping quantify the level of discrepancy between the compared data.
 - **Detailed Comparison**: Outputs differences clearly to help identify mismatches easily.
+- **Easy to Use**: Simple command-line interface for quick comparisons.
 
 ## Prerequisites
 
