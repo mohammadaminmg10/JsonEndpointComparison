@@ -27,7 +27,9 @@ func TestCompareActionsResponses(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			got := CompareActionsResponses(tc.response1, tc.response2)
+
+			var totalFieldsCompared int
+			got, _ := CompareActionsResponses(tc.response1, tc.response2, &totalFieldsCompared)
 
 			if !reflect.DeepEqual(got, tc.want) {
 				t.Errorf("CompareActionsResponses(%v, %v) = %v; want %v", tc.response1, tc.response2, got, tc.want)
